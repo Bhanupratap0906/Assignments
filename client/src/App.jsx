@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import BookList from './pages/Books/BookList';
 import AddBook from './pages/Books/AddBook';
 import EditBook from './pages/Books/EditBook';
+import UserList from './pages/Users/UserList';
 
 // Import global styles
 import './styles/global.css';
@@ -38,6 +39,9 @@ const App = () => {
           <Route path="/books" element={<BookList />} />
           <Route path="/books/add" element={<AddBook />} />
           <Route path="/books/edit/:id" element={<EditBook />} />
+          
+          {/* Users */}
+          <Route path="/users" element={<UserList />} />
           
           {/* Fallback route */}
           <Route path="*" element={<Navigate to="/" replace />} />

@@ -22,7 +22,9 @@ const useUserStore = create((set, get) => ({
     
     try {
       const response = await userApi.getAll();
-      set({ users: response.data, isLoading: false });
+      const users = Array.isArray(response) ? response : 
+                   (response.data ? response.data : []);
+      set({ users, isLoading: false });
     } catch (error) {
       set({ 
         error: error.message || 'Failed to load users', 
@@ -37,8 +39,9 @@ const useUserStore = create((set, get) => ({
     
     try {
       const response = await userApi.getById(id);
-      set({ selectedUser: response.data, isLoading: false });
-      return response.data;
+      const user = response.data || response;
+      set({ selectedUser: user, isLoading: false });
+      return user;
     } catch (error) {
       set({ 
         error: error.message || 'Failed to load user', 
@@ -54,11 +57,12 @@ const useUserStore = create((set, get) => ({
     
     try {
       const response = await userApi.create(userData);
+      const user = response.data || response;
       set(state => ({ 
-        users: [...state.users, response.data], 
+        users: [...state.users, user], 
         isLoading: false 
       }));
-      return response.data;
+      return user;
     } catch (error) {
       set({ 
         error: error.message || 'Failed to add user', 
@@ -74,14 +78,15 @@ const useUserStore = create((set, get) => ({
     
     try {
       const response = await userApi.update(id, userData);
+      const user = response.data || response;
       set(state => ({
-        users: state.users.map(user => 
-          user.id === parseInt(id) ? response.data : user
+        users: state.users.map(item => 
+          item.id === parseInt(id) ? user : item
         ),
-        selectedUser: response.data,
+        selectedUser: user,
         isLoading: false
       }));
-      return response.data;
+      return user;
     } catch (error) {
       set({ 
         error: error.message || 'Failed to update user', 
@@ -117,9 +122,8 @@ const useUserStore = create((set, get) => ({
     
     try {
       const response = await userApi.borrowBook(userId, bookId);
-      
-      // Update the selected user and the user in the users array
-      const updatedUser = response.data.user;
+      const result = response.data || response;
+      const updatedUser = result.user;
       
       set(state => ({
         users: state.users.map(user => 
@@ -129,7 +133,7 @@ const useUserStore = create((set, get) => ({
         isLoading: false
       }));
       
-      return response.data;
+      return result;
     } catch (error) {
       set({ 
         error: error.message || 'Failed to borrow book', 
@@ -145,9 +149,8 @@ const useUserStore = create((set, get) => ({
     
     try {
       const response = await userApi.returnBook(userId, bookId);
-      
-      // Update the selected user and the user in the users array
-      const updatedUser = response.data.user;
+      const result = response.data || response;
+      const updatedUser = result.user;
       
       set(state => ({
         users: state.users.map(user => 
@@ -157,7 +160,7 @@ const useUserStore = create((set, get) => ({
         isLoading: false
       }));
       
-      return response.data;
+      return result;
     } catch (error) {
       set({ 
         error: error.message || 'Failed to return book', 

@@ -35,6 +35,7 @@ const BookCard = ({
 
   // Format published date
   const formatDate = (dateString) => {
+    if (!dateString) return 'Unknown';
     const date = new Date(dateString);
     return date.toLocaleDateString();
   };
@@ -54,7 +55,7 @@ const BookCard = ({
             
             <div className="book-card-detail">
               <span className="book-card-label">Genre:</span>
-              <span>{book.genre}</span>
+              <span>{book.genre || 'Unspecified'}</span>
             </div>
             
             <div className="book-card-detail">
@@ -90,13 +91,13 @@ const BookCard = ({
           </>
         )}
         
-        {!isAdmin && book.copiesAvailable > 0 && !isBorrowed && (
+        {!isAdmin && book.copiesAvailable > 0 && !isBorrowed && onBorrow && (
           <Button variant="primary" size="small" onClick={() => onBorrow(book.id)}>
             Borrow
           </Button>
         )}
         
-        {!isAdmin && isBorrowed && (
+        {!isAdmin && isBorrowed && onReturn && (
           <Button variant="secondary" size="small" onClick={() => onReturn(book.id)}>
             Return
           </Button>
