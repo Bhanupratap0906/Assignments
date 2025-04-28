@@ -1,0 +1,86 @@
+﻿/**
+ * Mock data for the application
+ * Used when the real API is not available
+ */
+
+
+export const books = [
+  {
+    id: 1,
+    title: "To Kill a Mockingbird",
+    author: "Harper Lee",
+    isbn: "9780061120084",
+    publishedDate: "1960-07-11",
+    genre: "Fiction",
+    description: "The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it.",
+    totalCopies: 5,
+    copiesAvailable: 3,
+    createdAt: "2023-01-15T10:30:00Z"
+  },
+  {
+    id: 2,
+    title: "1984",
+    author: "George Orwell",
+    isbn: "9780451524935",
+    publishedDate: "1949-06-08",
+    genre: "Science Fiction",
+    description: "A dystopian social science fiction novel and cautionary tale set in a totalitarian state.",
+    totalCopies: 3,
+    copiesAvailable: 1,
+    createdAt: "2023-01-20T14:15:00Z"
+  },
+  {
+    id: 3,
+    title: "Pride and Prejudice",
+    author: "Jane Austen",
+    isbn: "9780141439518",
+    publishedDate: "1813-01-28",
+    genre: "Classic",
+    description: "A romantic novel of manners that depicts the emotional development of the protagonist.",
+    totalCopies: 4,
+    copiesAvailable: 2,
+    createdAt: "2023-02-05T09:45:00Z"
+  },
+  {
+    id: 4,
+    title: "The Great Gatsby",
+    author: "F. Scott Fitzgerald",
+    isbn: "9780743273565",
+    publishedDate: "1925-04-10",
+    genre: "Fiction",
+    description: "A story of wealth, class, love and the American Dream in the Jazz Age of the 1920s.",
+    totalCopies: 6,
+    copiesAvailable: 0,
+    createdAt: "2023-02-10T16:20:00Z"
+  },
+  {
+    id: 5,
+    title: "The Hobbit",
+    author: "J.R.R. Tolkien",
+    isbn: "9780261102217",
+    publishedDate: "1937-09-21",
+    genre: "Fantasy",
+    description: "A children's fantasy novel set in a fantasy world setting of Middle-earth.",
+    totalCopies: 7,
+    copiesAvailable: 4,
+    createdAt: "2023-03-01T11:10:00Z"
+  }
+];
+
+
+export const users = [
+  {
+    id: 1,
+    name: "John Doe",
+    email: "john.doe@example.com",
+    role: "admin",
+    borrowedBooks: [4]
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    email: "jane.smith@example.com",
+    role: "user",
+    borrowedBooks: [2, 3]
+  }
+]; 

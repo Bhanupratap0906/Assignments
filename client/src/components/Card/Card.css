@@ -1,0 +1,48 @@
+/* Card Component Styles */
+
+.card {
+  background-color: var(--card-color);
+  border-radius: var(--border-radius-md);
+  padding: var(--spacing-md);
+  border: 1px solid var(--border-color);
+  overflow: hidden;
+  transition: var(--transition-normal);
+}
+
+.card-elevation {
+  box-shadow: var(--shadow-sm);
+}
+
+.card-elevation:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.card-title {
+  font-size: var(--font-size-lg);
+  font-weight: 500;
+  margin-bottom: var(--spacing-md);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Card with clickable functionality */
+.card[onClick] {
+  cursor: pointer;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .card {
+    padding: var(--spacing-sm);
+  }
+  
+  .card-title {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-sm);
+  }
+} 

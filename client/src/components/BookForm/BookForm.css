@@ -1,0 +1,48 @@
+/* BookForm Component Styles */
+
+.book-form {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.book-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.book-form-copies {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-md);
+}
+
+.book-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .book-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .book-form-copies {
+    grid-template-columns: 1fr;
+  }
+  
+  .book-form-actions {
+    flex-direction: column-reverse;
+    gap: var(--spacing-sm);
+  }
+  
+  .book-form-actions button {
+    width: 100%;
+  }
+} 

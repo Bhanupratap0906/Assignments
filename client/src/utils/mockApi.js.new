@@ -1,0 +1,219 @@
+﻿/**
+ * Mock API Service
+ * 
+ * A mock implementation of the API service for development
+ */
+
+import { books as initialBooks, users as initialUsers } from './mockData';
+
+
+let books = [...initialBooks];
+let users = [...initialUsers];
+
+
+const delay = (ms = 500) => new Promise(resolve => setTimeout(resolve, ms));
+
+/**
+ * Book API Functions
+ */
+export const mockBookApi = {
+  
+  getAll: async () => {
+    await delay();
+    return [...books];
+  },
+  
+  
+  getById: async (id) => {
+    await delay();
+    const book = books.find(book => book.id === parseInt(id));
+    if (!book) {
+      throw { status: 404, message: 'Book not found' };
+    }
+    return book;
+  },
+  
+  
+  create: async (bookData) => {
+    await delay();
+    const newId = Math.max(...books.map(book => book.id), 0) + 1;
+    const newBook = {
+      ...bookData,
+      id: newId,
+      createdAt: new Date().toISOString(),
+      totalCopies: parseInt(bookData.totalCopies) || 1,
+      copiesAvailable: parseInt(bookData.copiesAvailable) || 1
+    };
+    books.push(newBook);
+    return newBook;
+  },
+  
+  
+  update: async (id, bookData) => {
+    await delay();
+    const index = books.findIndex(book => book.id === parseInt(id));
+    if (index === -1) {
+      throw { status: 404, message: 'Book not found' };
+    }
+    
+    const updatedBook = {
+      ...books[index],
+      ...bookData,
+      id: parseInt(id),
+      totalCopies: parseInt(bookData.totalCopies) || books[index].totalCopies,
+      copiesAvailable: parseInt(bookData.copiesAvailable) || books[index].copiesAvailable
+    };
+    
+    books[index] = updatedBook;
+    return updatedBook;
+  },
+  
+  
+  delete: async (id) => {
+    await delay();
+    const index = books.findIndex(book => book.id === parseInt(id));
+    if (index === -1) {
+      throw { status: 404, message: 'Book not found' };
+    }
+    
+    books.splice(index, 1);
+    return { success: true };
+  }
+};
+
+/**
+ * User API Functions
+ */
+export const mockUserApi = {
+  
+  getAll: async () => {
+    await delay();
+    return [...users];
+  },
+  
+  
+  getById: async (id) => {
+    await delay();
+    const user = users.find(user => user.id === parseInt(id));
+    if (!user) {
+      throw { status: 404, message: 'User not found' };
+    }
+    return user;
+  },
+  
+  
+  create: async (userData) => {
+    await delay();
+    const newId = Math.max(...users.map(user => user.id), 0) + 1;
+    const newUser = {
+      ...userData,
+      id: newId,
+      borrowedBooks: []
+    };
+    users.push(newUser);
+    return newUser;
+  },
+  
+  
+  update: async (id, userData) => {
+    await delay();
+    const index = users.findIndex(user => user.id === parseInt(id));
+    if (index === -1) {
+      throw { status: 404, message: 'User not found' };
+    }
+    
+    const updatedUser = {
+      ...users[index],
+      ...userData,
+      id: parseInt(id)
+    };
+    
+    users[index] = updatedUser;
+    return updatedUser;
+  },
+  
+  
+  delete: async (id) => {
+    await delay();
+    const index = users.findIndex(user => user.id === parseInt(id));
+    if (index === -1) {
+      throw { status: 404, message: 'User not found' };
+    }
+    
+    users.splice(index, 1);
+    return { success: true };
+  },
+  
+  
+  borrowBook: async (userId, bookId) => {
+    await delay();
+    const userIndex = users.findIndex(user => user.id === parseInt(userId));
+    if (userIndex === -1) {
+      throw { status: 404, message: 'User not found' };
+    }
+    
+    const bookIndex = books.findIndex(book => book.id === parseInt(bookId));
+    if (bookIndex === -1) {
+      throw { status: 404, message: 'Book not found' };
+    }
+    
+    if (books[bookIndex].copiesAvailable <= 0) {
+      throw { status: 400, message: 'No copies available for borrowing' };
+    }
+    
+    
+    books[bookIndex] = {
+      ...books[bookIndex],
+      copiesAvailable: books[bookIndex].copiesAvailable - 1
+    };
+    
+    
+    if (!users[userIndex].borrowedBooks.includes(parseInt(bookId))) {
+      users[userIndex] = {
+        ...users[userIndex],
+        borrowedBooks: [...users[userIndex].borrowedBooks, parseInt(bookId)]
+      };
+    }
+    
+    return {
+      user: users[userIndex],
+      book: books[bookIndex]
+    };
+  },
+  
+  
+  returnBook: async (userId, bookId) => {
+    await delay();
+    const userIndex = users.findIndex(user => user.id === parseInt(userId));
+    if (userIndex === -1) {
+      throw { status: 404, message: 'User not found' };
+    }
+    
+    const bookIndex = books.findIndex(book => book.id === parseInt(bookId));
+    if (bookIndex === -1) {
+      throw { status: 404, message: 'Book not found' };
+    }
+    
+    
+    if (!users[userIndex].borrowedBooks.includes(parseInt(bookId))) {
+      throw { status: 400, message: 'User has not borrowed this book' };
+    }
+    
+    
+    books[bookIndex] = {
+      ...books[bookIndex],
+      copiesAvailable: books[bookIndex].copiesAvailable + 1
+    };
+    
+    
+    users[userIndex] = {
+      ...users[userIndex],
+      borrowedBooks: users[userIndex].borrowedBooks.filter(id => id !== parseInt(bookId))
+    };
+    
+    return {
+      user: users[userIndex],
+      book: books[bookIndex]
+    };
+  }
+}; 

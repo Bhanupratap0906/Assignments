@@ -1,0 +1,19 @@
+/* Layout Component Styles */
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--spacing-lg) 0;
+}
+
+/* Add some spacing on mobile */
+@media (max-width: 640px) {
+  .main-content {
+    padding: var(--spacing-md) 0;
+  }
+} 

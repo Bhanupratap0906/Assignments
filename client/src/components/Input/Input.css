@@ -1,0 +1,79 @@
+/* Input Component Styles */
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-md);
+}
+
+.input-label {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  margin-bottom: var(--spacing-xs);
+  color: var(--text-color);
+}
+
+.input-required {
+  color: var(--error-color);
+  margin-left: var(--spacing-xs);
+}
+
+.input {
+  padding: 0.75rem;
+  font-size: var(--font-size-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  background-color: white;
+  transition: var(--transition-fast);
+  font-family: var(--font-family);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(63, 81, 181, 0.2);
+}
+
+.input::placeholder {
+  color: var(--text-light);
+}
+
+.input-error {
+  border-color: var(--error-color);
+}
+
+.input-error:focus {
+  border-color: var(--error-color);
+  box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+}
+
+.input-error-message {
+  color: var(--error-color);
+  font-size: var(--font-size-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+/* Disabled State */
+.input:disabled {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Different input types */
+.input[type="date"],
+.input[type="datetime-local"] {
+  min-height: 2.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .input {
+    padding: 0.6rem;
+    font-size: var(--font-size-sm);
+  }
+} 
